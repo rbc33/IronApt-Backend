@@ -22,6 +22,9 @@ app.use("/api/fileupload", fileUploadRoutes);
 import apartmentRoutes from "./routes/apartment.routes";
 app.use("/api/apartment", apartmentRoutes);
 
+import bookingRoutes from "./routes/booking.routes";
+app.use("/api/booking", bookingRoutes);
+
 app.get("/", (req: Request, res: Response) => { 
   res.status(200).send("Hello World");
 }); 
