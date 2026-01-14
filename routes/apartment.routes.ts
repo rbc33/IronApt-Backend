@@ -28,10 +28,19 @@ router.get("/", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-
 router.get("/:id", (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
   Apartment.findById(id)
+    .populate("bookings")
+    .then((apartments) => res.status(200).json(apartments))
+    .catch((err) => next(err));
+});
+
+router.put("/:id", (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+  const { _id, name, image, size, pricePerDay, description, capacity } = req.body;
+  const updatedApt = {_id, name, image, size, pricePerDay, description, capacity }
+  Apartment.findByIdAndUpdate(id, updatedApt, {new: true})
     .populate("bookings")
     .then((apartments) => res.status(200).json(apartments))
     .catch((err) => next(err));
