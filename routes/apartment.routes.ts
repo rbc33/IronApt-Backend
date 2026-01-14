@@ -1,16 +1,25 @@
-import multer from "multer";
 import {Router} from "express";
 import Apartment from "../models/Apartment.model"
-import resize from "../middleware/ImageResize";
-
-const upload = multer({
-  dest: "uploads/",
-  limits: { fieldSize: 25 * 1024 * 1024 },
-});
 
 const router = Router();
 
-router.post("/", upload.array("images", 5), resize, async (req, res) => {
-    
+router.post("/", (req, res, next) => {
+  const { name, image, size, pricePerDay, description, capacity } = req.body;
+  
+  const newApartment = new Apartment({    
+    name,
+    image,
+    size,
+    pricePerDay,
+    description,
+    capacity,
+  });
+
+  Apartment.create(newApartment)
+  .then(apt => res.status(200).json(newApartment))
+  .catch(err => next(err));
+
 })
+
+export default router;
 
