@@ -23,9 +23,11 @@ router.post("/", (req, res, next) => {
 
 router.get("/", (req, res, next) => {
   Apartment.find()
+    .populate("bookings")
     .then((apartments) => res.status(200).json(apartments))
     .catch((err) => next(err));
 });
+
 
 router.get("/:id", (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;

@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "tsx watch ./app.ts",
     "build": "tsc",
-    "start": "node ./dist/app.js"
+    "start": "node ./dist/app.js",
+    "migrate": "tsx ./migrate-bookings.ts"
   },
   "dependencies": {
     "@types/cookie-parser": "^1.4.10",
