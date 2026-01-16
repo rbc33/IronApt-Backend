@@ -1,3 +1,6 @@
+node_modules/
 .env
+public/temp/*
+!public/temp/.gitkeep
 public/temp/*
 !public/temp/.gitkeep
