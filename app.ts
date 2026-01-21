@@ -25,6 +25,9 @@ app.use("/api/apartment", apartmentRoutes);
 import bookingRoutes from "./routes/booking.routes";
 app.use("/api/booking", bookingRoutes);
 
+import authRoutes from "./routes/auth.routes";
+app.use("/auth", authRoutes);
+
 app.get("/", (req: Request, res: Response) => { 
   res.status(200).send("Hello World");
 }); 
