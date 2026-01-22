@@ -23,9 +23,10 @@ import apartmentRoutes from "./routes/apartment.routes";
 app.use("/api/apartment", apartmentRoutes);
 
 import bookingRoutes from "./routes/booking.routes";
-app.use("/api/booking", bookingRoutes);
+app.use("/api/booking",isAuthenticated, bookingRoutes);
 
 import authRoutes from "./routes/auth.routes";
+import { isAuthenticated } from "./middleware/jwt.middleware";
 app.use("/auth", authRoutes);
 
 app.get("/", (req: Request, res: Response) => { 

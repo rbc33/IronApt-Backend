@@ -1,6 +1,7 @@
 import { Router } from "express";
 import Apartment from "../models/Apartment.model";
 import { Request, Response, NextFunction } from "express";
+import { isAuthenticated } from "../middleware/jwt.middleware";
 
 const router = Router();
 
@@ -22,21 +23,23 @@ router.post("/", (req, res, next) => {
 });
 
 router.get("/", (req, res, next) => {
+  // console.log(req)
   Apartment.find()
     .populate("bookings")
     .then((apartments) => res.status(200).json(apartments))
     .catch((err) => next(err));
 });
 
-router.get("/:id", (req: Request, res: Response, next: NextFunction) => {
+router.get("/:id",isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
+  // console.log(req)
   Apartment.findById(id)
     .populate("bookings")
     .then((apartments) => res.status(200).json(apartments))
     .catch((err) => next(err));
 });
 
-router.put("/:id", (req: Request, res: Response, next: NextFunction) => {
+router.put("/:id",isAuthenticated, (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
   const { _id, name, image, size, pricePerDay, description, capacity } = req.body;
   const updatedApt = {_id, name, image, size, pricePerDay, description, capacity }
