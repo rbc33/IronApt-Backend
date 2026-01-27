@@ -11,6 +11,7 @@ const PORT = process.env.PORT;
 
 // Configure middleware first
 middlewareConfig(app);
+import { isAuthenticated } from "./middleware/jwt.middleware";
 
 // Import database connection
 import("./db");
@@ -26,7 +27,6 @@ import bookingRoutes from "./routes/booking.routes";
 app.use("/api/booking",isAuthenticated, bookingRoutes);
 
 import authRoutes from "./routes/auth.routes";
-import { isAuthenticated } from "./middleware/jwt.middleware";
 app.use("/auth", authRoutes);
 
 app.get("/", (req: Request, res: Response) => { 
