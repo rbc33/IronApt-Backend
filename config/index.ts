@@ -7,11 +7,11 @@ import logger from "morgan";
 
 // ℹ️ Needed when we deal with cookies (we will when dealing with authentication)
 // https://www.npmjs.com/package/cookie-parser
-import cookieParser from  "cookie-parser";
+import cookieParser from "cookie-parser";
 
 // ℹ️ Needed to accept requests from 'the outside'. CORS stands for cross origin resource sharing
 // unless the request is made from the same domain, by default express wont accept POST requests
-import cors from  "cors";
+import cors from "cors";
 import type { Application } from "express";
 
 const FRONTEND_URL = process.env.ORIGIN || "http://localhost:3000";
@@ -25,8 +25,8 @@ const middlewareConfig = (app: Application) => {
   // controls a very specific header to pass headers from the frontend
   app.use(
     cors({
-      origin: [FRONTEND_URL],
-    })
+      origin: [FRONTEND_URL, "http://localhost:5173", "http://localhost:3000"],
+    }),
   );
 
   // In development environment the app logs
