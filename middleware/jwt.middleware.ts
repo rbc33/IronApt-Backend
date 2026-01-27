@@ -10,10 +10,11 @@ const isAuthenticated = (req: AuthRequest, res: Response, next: NextFunction) =>
   try {
     
     const token = req.headers.authorization?.split(" ")[1]; // get the token from headers "Bearer 123XYZ..."
-    if (token) {
+    if (!token) {
+      return res.status(401).json("token not provided or not valid");
+    }
     const payload = jwt.verify(token, process.env.TOKEN_SECRET!) // the verify method decodes/validates the token and returns the payload
     req.payload = payload // this is to pass the decoded payload to the next route as req.payload
-}
     next()
 
   } catch (error) {
