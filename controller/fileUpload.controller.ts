@@ -1,4 +1,4 @@
-import cloudinary from "../utils/cloudinaryConfig"
+import cloudinary from "../utils/cloudinaryConfig.js"
 import fs from "fs"
 import { NextFunction, Request, Response } from "express";
 

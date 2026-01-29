@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
 import bcrypt from 'bcryptjs'
 import jwt from "jsonwebtoken"
-import User from "../models/User.model"
+import User from "../models/User.model.js"
 
 import  { AuthRequest, isAuthenticated } from './../middleware/jwt.middleware.js'
 
