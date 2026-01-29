@@ -1,6 +1,6 @@
 import { Router } from "express";
-import Booking from "../models/Booking.model";
-import Apartment from "../models/Apartment.model";
+import Booking from "../models/Booking.model.js";
+import Apartment from "../models/Apartment.model.js";
 import { Request, Response, NextFunction } from "express";
 
 const router = Router();
