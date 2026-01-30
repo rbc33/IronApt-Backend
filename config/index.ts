@@ -25,8 +25,13 @@ const middlewareConfig = (app: Application) => {
   // controls a very specific header to pass headers from the frontend
   app.use(
     cors({
-      // origin: [FRONTEND_URL, "http://localhost:5173", "http://localhost:3000"],
-      origin: "*",
+      origin: [
+        FRONTEND_URL,
+        "https://proyect3-frontend.vercel.app",
+        "http://localhost:5173",
+        "http://localhost:3000",
+      ],
+      credentials: true,
     }),
   );
 
