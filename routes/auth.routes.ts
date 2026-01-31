@@ -138,5 +138,65 @@ router.get('/verify', isAuthenticated, (req: AuthRequest , res, next) => {
   res.status(200).json(req.payload);
 });
 
+router.get("/user/:id", isAuthenticated, (req, res, next) => {
+  const userId = req.params.id;
+  
+  
+
+} )
+router.put("/user/:id", isAuthenticated, (req, res, next) => {
+  const userId = req.params.id;
+
+  // Check if the user is updating their own profile
+  if (userId !== req.body._id!) {
+    res.status(403).json({ message: "You can only update your own profile" });
+    return;
+  }
+
+  const { password, name } = req.body;
+
+  const updateData: any = {};
+
+  if (name) {
+    updateData.name = name;
+  }
+
+  if (password) {
+    // Use regex to validate the password format
+    const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
+    if (!passwordRegex.test(password)) {
+      res.status(400).json({ message: 'Password must have at least 6 characters and contain at least one number, one lowercase and one uppercase letter.' });
+      return;
+    }
+
+    // Hash the password
+    const salt = bcrypt.genSaltSync(saltRounds);
+    updateData.password = bcrypt.hashSync(password, salt);
+  }
+
+  if (Object.keys(updateData).length === 0) {
+    res.status(400).json({ message: "Provide at least one field to update (name or password)" });
+    return;
+  }
+
+  User.findByIdAndUpdate(userId, updateData, { new: true })
+    .then((updatedUser) => {
+      if (!updatedUser) {
+        res.status(404).json({ message: "User not found" });
+        return;
+      }
+
+      // Deconstruct to omit password
+      const { email, name: userName, _id } = updatedUser;
+      const user = { email, name: userName, _id };
+
+      res.status(200).json({ user: user });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "Internal Server Error" });
+    });
+});
+
 
 export default router;
