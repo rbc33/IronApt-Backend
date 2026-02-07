@@ -66,4 +66,17 @@ router.put(
   },
 );
 
+router.delete(
+  "/:id",
+  isAuthenticated,
+  (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+
+
+    Apartment.findByIdAndDelete(id)
+      .then((apartments) => res.status(200).json(apartments))
+      .catch((err) => next(err));
+  },
+);
+
 export default router;
